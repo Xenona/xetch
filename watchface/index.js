@@ -8,31 +8,33 @@
         const jstime = hmSensor.createSensor(hmSensor.id.TIME)
 
         let timeHourTensFontArray, timeHourOnesFontArray, timeMinutesTensFontArray, timeMinutesOnesFontArray
-        let timeSecondsTensFontArray, timeSecondsOnesFontArray
-        let timeHourTens, timeHourOnes, timeMinutesTens, timeMinutesOnes
-        let timeSecondTens, timeSecondOnes 
+        let timeSecondTensFontArray, timeSecondOnesFontArray
 
         function setImgNumber(widget, fontArray, number) {
             widget.setProperty(hmUI.prop.SRC, fontArray[number]);
         }
 
-        function updateTime() {
-            setImgNumber(timeHourTens, timeHourTensFontArray, parseInt(jstime.format_hour / 10));
-            setImgNumber(timeHourOnes, timeHourOnesFontArray, parseInt(jstime.format_hour % 10));
-            setImgNumber(timeMinutesTens, timeMinutesTensFontArray, parseInt(jstime.minute / 10));
-            setImgNumber(timeMinutesOnes, timeMinutesOnesFontArray, parseInt(jstime.minute % 10));
-            // setImgNumber(timeSecondTens, timeSecondTensFontArray, parseInt(jstime.second / 10));
-            // setImgNumber(timeSecondOnes, timeSecondOnesFontArray, parseInt(jstime.second % 10));
-        }
 
         __$$module$$__.module = DeviceRuntimeCore.Page({
             init_view() {
+
+
+                  function updateTime() {
+                    setImgNumber(timeHourTens, timeHourTensFontArray, parseInt(jstime.format_hour / 10));
+                    setImgNumber(timeHourOnes, timeHourOnesFontArray, parseInt(jstime.format_hour % 10));
+                    setImgNumber(timeMinutesTens, timeMinutesTensFontArray, parseInt(jstime.minute / 10));
+                    setImgNumber(timeMinutesOnes, timeMinutesOnesFontArray, parseInt(jstime.minute % 10));
+                    setImgNumber(timeSecondTens, timeSecondTensFontArray, parseInt(jstime.second / 10));
+                    setImgNumber(timeSecondOnes, timeSecondOnesFontArray, parseInt(jstime.second % 10));
+                }
+                
                     hmUI.createWidget(hmUI.widget.IMG, {
                         x: 0,
                         y: -1,
                         src: 'images/0.png',
                         show_level: hmUI.show_level.ONLY_NORMAL
                     });
+
                     hmUI.createWidget(hmUI.widget.IMG_TIME, {
                         hour_zero: 1,
                         hour_startX: 25,
@@ -50,7 +52,7 @@
 
                         second_zero: 1,
                         second_startX: 25,
-                        second_startY: 245,
+                        second_startY: 355,
                         second_array: ["0.png","1.png","2.png","3.png","4.png","5.png","6.png","7.png","8.png","9.png"],
                         second_space: 0,
                         second_align: hmUI.align.RIGHT,
@@ -61,40 +63,42 @@
                     timeHourOnesFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
                     timeMinutesTensFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
                     timeMinutesOnesFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
-                    timeSecondsTensFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
-                    timeSecondsOnesFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
+                    timeSecondTensFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
+                    timeSecondOnesFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
                     
-                    timeHourTens = hmUI.createWidget(hmUI.widget.IMG, {
+                    
+
+                    var timeHourTens = hmUI.createWidget(hmUI.widget.IMG, {
                         x: 43,
                         y: 163,
                         src: 'images/30.png',
                         show_level: hmUI.show_level.ONLY_NORMAL
                     })
-                    timeHourOnes = hmUI.createWidget(hmUI.widget.IMG, {
+                    var timeHourOnes = hmUI.createWidget(hmUI.widget.IMG, {
                         x: 93,
                         y: 163,
                         src: 'images/30.png',
                         show_level: hmUI.show_level.ONLY_NORMAL
                     })
-                    timeMinutesTens = hmUI.createWidget(hmUI.widget.IMG, {
+                    var timeMinutesTens = hmUI.createWidget(hmUI.widget.IMG, {
                         x: 43,
                         y: 237,
                         src: 'images/30.png',
                         show_level: hmUI.show_level.ONLY_NORMAL
                     })
-                    timeMinutesOnes = hmUI.createWidget(hmUI.widget.IMG, {
+                    var timeMinutesOnes = hmUI.createWidget(hmUI.widget.IMG, {
                         x: 93,
                         y: 237,
                         src: 'images/30.png',
                         show_level: hmUI.show_level.ONLY_NORMAL
                     })
-                    timeSecondsTens = hmUI.createWidget(hmUI.widget.IMG, {
+                    var timeSecondTens = hmUI.createWidget(hmUI.widget.IMG, {
                         x: 43,
                         y: 311,
                         src: 'images/30.png',
                         show_level: hmUI.show_level.ONLY_NORMAL
                     })
-                    timeSecondsOnes = hmUI.createWidget(hmUI.widget.IMG, {
+                    var timeSecondOnes = hmUI.createWidget(hmUI.widget.IMG, {
                         x: 93,
                         y: 311,
                         src: 'images/30.png',
@@ -158,6 +162,9 @@
                             updateTime();
                         })
                     })
+
+                    
+
                     timer.createTimer(0, 1000, (function(option) {
                         updateTime();
                     }))
