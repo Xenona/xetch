@@ -1,4 +1,10 @@
-﻿try {
+﻿var TIME_W = 50;
+var TIME_H = 94;
+var TIME_X_L = 43;
+var TIME_X_R = TIME_X_L + TIME_W;
+var TIME_Y = 163;
+
+try {
     (() => {
         var __$$app$$__ = __$$hmAppManager$$__.currentApp;
         var __$$module$$__ = __$$app$$__.current;
@@ -7,33 +13,52 @@
 
         const jstime = hmSensor.createSensor(hmSensor.id.TIME)
 
-        let timeHourTensFontArray, timeHourOnesFontArray, timeMinutesTensFontArray, timeMinutesOnesFontArray
-        let timeSecondTensFontArray, timeSecondOnesFontArray
-
-        function setImgNumber(widget, fontArray, number) {
-            widget.setProperty(hmUI.prop.SRC, fontArray[number]);
-        }
 
 
         __$$module$$__.module = DeviceRuntimeCore.Page({
             init_view() {
 
+                hmUI.createWidget(hmUI.widget.IMG, {
+                    x: 0,
+                    y: -1,
+                    src: 'images/0.png',
+                    show_level: hmUI.show_level.ONLY_NORMAL
+                });
 
-                  function updateTime() {
-                    setImgNumber(timeHourTens, timeHourTensFontArray, parseInt(jstime.format_hour / 10));
-                    setImgNumber(timeHourOnes, timeHourOnesFontArray, parseInt(jstime.format_hour % 10));
-                    setImgNumber(timeMinutesTens, timeMinutesTensFontArray, parseInt(jstime.minute / 10));
-                    setImgNumber(timeMinutesOnes, timeMinutesOnesFontArray, parseInt(jstime.minute % 10));
-                    setImgNumber(timeSecondTens, timeSecondTensFontArray, parseInt(jstime.second / 10));
-                    setImgNumber(timeSecondOnes, timeSecondOnesFontArray, parseInt(jstime.second % 10));
+                var timeDigitsFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
+                var timeDigits = [];
+                    var y = TIME_Y;
+                    for (let i = 0; i < 3; i++) {
+                    timeDigits.push(hmUI.createWidget(hmUI.widget.IMG, {
+                        x: TIME_X_L,
+                        y: y,
+                        src: 'images/30.png',
+                        show_level: hmUI.show_level.ONLY_NORMAL
+                    }));
+                    timeDigits.push(hmUI.createWidget(hmUI.widget.IMG, {
+                        x: TIME_X_R, 
+                        y: y,
+                        src: 'images/30.png',
+                        show_level: hmUI.show_level.ONLY_NORMAL
+                    }));
+                    y += TIME_H;
+                }
+
+
+
+                function updateTime() {
+                    setImgNumber(timeDigits[0], parseInt(jstime.format_hour / 10));
+                    setImgNumber(timeDigits[1], parseInt(jstime.format_hour % 10));
+                    setImgNumber(timeDigits[2], parseInt(jstime.minute / 10));
+                    setImgNumber(timeDigits[3], parseInt(jstime.minute % 10));
+                    setImgNumber(timeDigits[4], parseInt(jstime.second / 10));
+                    setImgNumber(timeDigits[5], parseInt(jstime.second % 10));
                 }
                 
-                    hmUI.createWidget(hmUI.widget.IMG, {
-                        x: 0,
-                        y: -1,
-                        src: 'images/0.png',
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    });
+                function setImgNumber(widget, number) {
+                    widget.setProperty(hmUI.prop.SRC, timeDigitsFontArray[number]);
+                }
+        
 
                     hmUI.createWidget(hmUI.widget.IMG_TIME, {
                         hour_zero: 1,
@@ -58,52 +83,8 @@
                         second_align: hmUI.align.RIGHT,
 
                         show_level: hmUI.show_level.ONLY_AOD
-                    }),
-                    timeHourTensFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
-                    timeHourOnesFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
-                    timeMinutesTensFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
-                    timeMinutesOnesFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
-                    timeSecondTensFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
-                    timeSecondOnesFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
-                    
-                    
+                    });
 
-                    var timeHourTens = hmUI.createWidget(hmUI.widget.IMG, {
-                        x: 43,
-                        y: 163,
-                        src: 'images/30.png',
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
-                    var timeHourOnes = hmUI.createWidget(hmUI.widget.IMG, {
-                        x: 93,
-                        y: 163,
-                        src: 'images/30.png',
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
-                    var timeMinutesTens = hmUI.createWidget(hmUI.widget.IMG, {
-                        x: 43,
-                        y: 237,
-                        src: 'images/30.png',
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
-                    var timeMinutesOnes = hmUI.createWidget(hmUI.widget.IMG, {
-                        x: 93,
-                        y: 237,
-                        src: 'images/30.png',
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
-                    var timeSecondTens = hmUI.createWidget(hmUI.widget.IMG, {
-                        x: 43,
-                        y: 311,
-                        src: 'images/30.png',
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
-                    var timeSecondOnes = hmUI.createWidget(hmUI.widget.IMG, {
-                        x: 93,
-                        y: 311,
-                        src: 'images/30.png',
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
                     hmUI.createWidget(hmUI.widget.IMG_DATE, {
                         month_startX: 22,
                         month_startY: 139,
@@ -148,22 +129,13 @@
                         type: hmUI.system_status.DISCONNECT,
                         show_level: hmUI.show_level.ONLY_NORMAL
                     })
-                    hmUI.createWidget(hmUI.widget.IMG_LEVEL, {
-                        x: 108,
-                        y: 14,
-                        image_array: ['images/bat/0.png', 'images/bat/1.png', 'images/bat/2.png', 'images/bat/3.png', 'images/bat/4.png', 'images/bat/5.png', 'images/bat/6.png', 'images/bat/7.png', 'images/bat/8.png', 'images/bat/9.png', 'images/bat/10.png'],
-                        image_length: 11,
-                        type: hmUI.data_type.BATTERY,
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
+ 
                     updateTime();
                     hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
                         resume_call: (function() {
                             updateTime();
                         })
                     })
-
-                    
 
                     timer.createTimer(0, 1000, (function(option) {
                         updateTime();
