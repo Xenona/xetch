@@ -7,16 +7,12 @@
             "drink"
         );
         ("use strict");
-        console.log("----->>>current");
-        console.log(__$$hmAppManager$$__.currentApp.pid);
-        console.log(__$$hmAppManager$$__.currentApp.current);
 
         const jstime = hmSensor.createSensor(hmSensor.id.TIME)
         const weather = hmSensor.createSensor(hmSensor.id.WEATHER)
 
         let timeHourTensFontArray, timeHourOnesFontArray, timeMinutesTensFontArray, timeMinutesOnesFontArray
         let timeHourTens, timeHourOnes, timeMinutesTens, timeMinutesOnes
-        let weatherWidget
 
         function setImgNumber(widget, fontArray, number) {
             widget.setProperty(hmUI.prop.SRC, fontArray[number]);
@@ -27,14 +23,6 @@
             setImgNumber(timeHourOnes, timeHourOnesFontArray, parseInt(jstime.format_hour % 10));
             setImgNumber(timeMinutesTens, timeMinutesTensFontArray, parseInt(jstime.minute / 10));
             setImgNumber(timeMinutesOnes, timeMinutesOnesFontArray, parseInt(jstime.minute % 10));
-        }
-
-        function updateWeather() {
-            const forecastData = weather.getForecastWeather().forecastData
-            if (forecastData.count) {
-                const element = forecastData.data[0]
-                weatherWidget.setProperty(hmUI.prop.TEXT, element.high + "u." + element.low + "u");
-            }
         }
 
         const logger = DeviceRuntimeCore.HmLogger.getLogger("sanjiao");
@@ -90,15 +78,6 @@
                         src: 'images/30.png',
                         show_level: hmUI.show_level.ONLY_NORMAL
                     })
-                    hmUI.createWidget(hmUI.widget.TEXT_IMG, {
-                        x: 49,
-                        y: 51,
-                        h_space: 0,
-                        font_array: ['images/50.png', 'images/51.png', 'images/52.png', 'images/53.png', 'images/54.png', 'images/55.png', 'images/56.png', 'images/57.png', 'images/58.png', 'images/59.png'],
-                        align_h: hmUI.align.LEFT,
-                        type: hmUI.data_type.STEP,
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
                     hmUI.createWidget(hmUI.widget.IMG_DATE, {
                         month_startX: 22,
                         month_startY: 139,
@@ -120,36 +99,6 @@
                         week_en: ['images/11.png', 'images/12.png', 'images/13.png', 'images/14.png', 'images/15.png', 'images/16.png', 'images/17.png'],
                         week_sc: undefined,
                         week_tc: undefined,
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
-                    hmUI.createWidget(hmUI.widget.IMG_LEVEL, {
-                        x: 57,
-                        y: 406,
-                        image_array: ['images/61.png', 'images/62.png', 'images/63.png', 'images/64.png', 'images/65.png', 'images/66.png', 'images/67.png', 'images/68.png', 'images/69.png', 'images/70.png', 'images/71.png', 'images/72.png', 'images/73.png', 'images/74.png', 'images/75.png', 'images/76.png', 'images/77.png', 'images/78.png', 'images/79.png', 'images/80.png', 'images/81.png', 'images/82.png', 'images/83.png', 'images/84.png', 'images/85.png', 'images/86.png', 'images/65.png', 'images/61.png', 'images/66.png', 'images/64.png'],
-                        image_length: 29,
-                        type: hmUI.data_type.WEATHER,
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
-                    hmUI.createWidget(hmUI.widget.TEXT_IMG, {
-                        x: 20,
-                        y: 386,
-                        h_space: 0,
-                        font_array: ['images/40.png', 'images/41.png', 'images/42.png', 'images/43.png', 'images/44.png', 'images/45.png', 'images/46.png', 'images/47.png', 'images/48.png', 'images/49.png'],
-                        align_h: hmUI.align.RIGHT,
-                        type: hmUI.data_type.WEATHER_CURRENT,
-                        unit_en: 'images/87.png',
-                        unit_sc: 'images/87.png',
-                        unit_tc: 'images/87.png',
-                        negative_image: 'images/86.png',
-                        w: 118,
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
-                    hmUI.createWidget(hmUI.widget.IMG_LEVEL, {
-                        x: 47,
-                        y: 78,
-                        image_array: ['images/1.png', 'images/2.png', 'images/3.png', 'images/4.png', 'images/5.png', 'images/6.png', 'images/7.png', 'images/8.png', 'images/9.png', 'images/10.png'],
-                        image_length: 10,
-                        type: hmUI.data_type.STEP,
                         show_level: hmUI.show_level.ONLY_NORMAL
                     })
                     hmUI.createWidget(hmUI.widget.IMG_STATUS, {

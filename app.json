@@ -2,14 +2,14 @@
     "configVersion":"v2",
     "app":{
        "appId":9088702,
-       "appName":"PixelBandD2",
+       "appName":"ReturnVoid",
        "appType":"watchface",
        "version":{
           "code":1,
           "name":"1.0"
        },
        "vender":"zepp",
-       "description":"XDA-4PDA:Ml1nker",
+       "description":"Xenona11x",
        "icon":"images/92.png"
     },
     "permissions":[
