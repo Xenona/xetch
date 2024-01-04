@@ -1,8 +1,12 @@
-﻿var TIME_W = 50;
-var TIME_H = 94;
+﻿var SCREEN_W = 192;
+var SCREEN_H = 490;
+var TIME_DIG_W = 52;
+var TIME_DIG_H = 77;
 var TIME_X_L = 43;
-var TIME_X_R = TIME_X_L + TIME_W;
-var TIME_Y = 163;
+var TIME_GAP_X = 10;
+var TIME_GAP_Y = 27; 
+var TIME_X_R = TIME_X_L + TIME_DIG_W + TIME_GAP_X;
+var TIME_Y = 44;
 
 try {
     (() => {
@@ -12,8 +16,6 @@ try {
         ("use strict");
 
         const jstime = hmSensor.createSensor(hmSensor.id.TIME)
-
-
 
         __$$module$$__.module = DeviceRuntimeCore.Page({
             init_view() {
@@ -25,7 +27,8 @@ try {
                     show_level: hmUI.show_level.ONLY_NORMAL
                 });
 
-                var timeDigitsFontArray = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
+                var normalDigitsFont = ['images/30.png', 'images/31.png', 'images/32.png', 'images/33.png', 'images/34.png', 'images/35.png', 'images/36.png', 'images/37.png', 'images/38.png', 'images/39.png']
+                var aodDigitsFont = ["0.png","1.png","2.png","3.png","4.png","5.png","6.png","7.png","8.png","9.png"];
                 var timeDigits = [];
                     var y = TIME_Y;
                     for (let i = 0; i < 3; i++) {
@@ -41,10 +44,8 @@ try {
                         src: 'images/30.png',
                         show_level: hmUI.show_level.ONLY_NORMAL
                     }));
-                    y += TIME_H;
+                    y += TIME_DIG_H + TIME_GAP_Y;
                 }
-
-
 
                 function updateTime() {
                     setImgNumber(timeDigits[0], parseInt(jstime.format_hour / 10));
@@ -56,7 +57,7 @@ try {
                 }
                 
                 function setImgNumber(widget, number) {
-                    widget.setProperty(hmUI.prop.SRC, timeDigitsFontArray[number]);
+                    widget.setProperty(hmUI.prop.SRC, normalDigitsFont[number]);
                 }
         
 
@@ -64,21 +65,21 @@ try {
                         hour_zero: 1,
                         hour_startX: 25,
                         hour_startY: 135,
-                        hour_array: ["0.png","1.png","2.png","3.png","4.png","5.png","6.png","7.png","8.png","9.png"],
+                        hour_array: aodDigitsFont,
                         hour_space: 0,
                         hour_align: hmUI.align.RIGHT,
 
                         minute_zero: 1,
                         minute_startX: 25,
                         minute_startY: 245,
-                        minute_array: ["0.png","1.png","2.png","3.png","4.png","5.png","6.png","7.png","8.png","9.png"],
+                        minute_array: aodDigitsFont,
                         minute_space: 0,
                         minute_align: hmUI.align.RIGHT,
 
                         second_zero: 1,
                         second_startX: 25,
                         second_startY: 355,
-                        second_array: ["0.png","1.png","2.png","3.png","4.png","5.png","6.png","7.png","8.png","9.png"],
+                        second_array: aodDigitsFont,
                         second_space: 0,
                         second_align: hmUI.align.RIGHT,
 
@@ -86,45 +87,31 @@ try {
                     });
 
                     hmUI.createWidget(hmUI.widget.IMG_DATE, {
-                        month_startX: 22,
-                        month_startY: 139,
+                        month_startX: 43,
+                        month_startY: 378,
                         month_en_array: ['images/18.png', 'images/19.png', 'images/20.png', 'images/21.png', 'images/22.png', 'images/23.png', 'images/24.png', 'images/25.png', 'images/26.png', 'images/27.png', 'images/28.png', 'images/29.png'],
                         month_is_character: true,
-                        day_startX: 63,
-                        day_startY: 138,
+
+                        day_startX: 114,
+                        day_startY: 379,
                         day_align: hmUI.align.CENTER_H,
                         day_space: 0,
                         day_zero: false,
                         day_en_array: ['images/50.png', 'images/51.png', 'images/52.png', 'images/53.png', 'images/54.png', 'images/55.png', 'images/56.png', 'images/57.png', 'images/58.png', 'images/59.png'],
-                        day_sc_array: ['images/50.png', 'images/51.png', 'images/52.png', 'images/53.png', 'images/54.png', 'images/55.png', 'images/56.png', 'images/57.png', 'images/58.png', 'images/59.png'],
-                        day_tc_array: ['images/50.png', 'images/51.png', 'images/52.png', 'images/53.png', 'images/54.png', 'images/55.png', 'images/56.png', 'images/57.png', 'images/58.png', 'images/59.png'],
+                        
                         show_level: hmUI.show_level.ONLY_NORMAL
                     })
+
                     hmUI.createWidget(hmUI.widget.IMG_WEEK, {
-                        x: 101,
-                        y: 302,
+                        x: 64,
+                        y: 416,
                         week_en: ['images/11.png', 'images/12.png', 'images/13.png', 'images/14.png', 'images/15.png', 'images/16.png', 'images/17.png'],
-                        week_sc: undefined,
-                        week_tc: undefined,
                         show_level: hmUI.show_level.ONLY_NORMAL
                     })
-                    hmUI.createWidget(hmUI.widget.IMG_STATUS, {
-                        x: 88,
-                        y: 6,
-                        src: 'images/90.png',
-                        type: hmUI.system_status.DISTURB,
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
-                    hmUI.createWidget(hmUI.widget.IMG_STATUS, {
-                        x: 68,
-                        y: 14,
-                        src: 'images/89.png',
-                        type: hmUI.system_status.LOCK,
-                        show_level: hmUI.show_level.ONLY_NORMAL
-                    })
+
                     hmUI.createWidget(hmUI.widget.IMG_STATUS, {
                         x: 93,
-                        y: 27,
+                        y: 465,
                         src: 'images/88.png',
                         type: hmUI.system_status.DISCONNECT,
                         show_level: hmUI.show_level.ONLY_NORMAL

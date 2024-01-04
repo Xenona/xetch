@@ -8,8 +8,8 @@
           "code":1,
           "name":"1.0"
        },
-       "vender":"zepp",
-       "description":"Xenona11x",
+       "vender":"Xenona11x",
+       "description":"",
        "icon":"images/92.png"
     },
     "permissions":[
@@ -24,12 +24,6 @@
     },
     "i18n":{
        "en-US":{
-          "icon":"images/92.png"
-       },
-       "zh-CN":{
-          "icon":"images/92.png"
-       },
-       "zh-TW":{
           "icon":"images/92.png"
        }
     },
