@@ -18,7 +18,6 @@ try {
 
     const timeSensor = hmSensor.createSensor(hmSensor.id.TIME);
     const batterySensor = hmSensor.createSensor(hmSensor.id.BATTERY);
-    var currentWidget = 0;
 
     const bigDigitsFont = [
       "images/time0.png",
