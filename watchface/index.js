@@ -8,6 +8,7 @@ var TIME_GAP_Y = 27;
 var TIME_X_R = TIME_X_L + TIME_DIG_W + TIME_GAP_X;
 var TIME_Y = 44;
 
+
 try {
   (() => {
     var __$$app$$__ = __$$hmAppManager$$__.currentApp;
@@ -16,54 +17,59 @@ try {
     ("use strict");
 
     const timeSensor = hmSensor.createSensor(hmSensor.id.TIME);
+    const batterySensor = hmSensor.createSensor(hmSensor.id.BATTERY);
+    var currentWidget = 0;
+
     const bigDigitsFont = [
-        "images/time0.png",
-        "images/time1.png",
-        "images/time2.png",
-        "images/time3.png",
-        "images/time4.png",
-        "images/time5.png",
-        "images/time6.png",
-        "images/time7.png",
-        "images/time8.png",
-        "images/time9.png",
+      "images/time0.png",
+      "images/time1.png",
+      "images/time2.png",
+      "images/time3.png",
+      "images/time4.png",
+      "images/time5.png",
+      "images/time6.png",
+      "images/time7.png",
+      "images/time8.png",
+      "images/time9.png",
     ];
     const monthsFont = [
-        "images/jan.png",
-        "images/feb.png",
-        "images/mar.png",
-        "images/apr.png",
-        "images/may.png",
-        "images/jun.png",
-        "images/jul.png",
-        "images/aug.png",
-        "images/sep.png",
-        "images/oct.png",
-        "images/nov.png",
-        "images/dec.png",
-      ];
-      const smallDigitsFont = [
-        "images/date0.png",
-        "images/date1.png",
-        "images/date2.png",
-        "images/date3.png",
-        "images/date4.png",
-        "images/date5.png",
-        "images/date6.png",
-        "images/date7.png",
-        "images/date8.png",
-        "images/date9.png",
-      ];
-      const weekDaysFont = [
-        "images/mon.png",
-        "images/tue.png",
-        "images/wed.png",
-        "images/thu.png",
-        "images/fri.png",
-        "images/sat.png",
-        "images/sun.png",
-      ];
-      const statusDot = "images/dot.png";
+      "images/jan.png",
+      "images/feb.png",
+      "images/mar.png",
+      "images/apr.png",
+      "images/may.png",
+      "images/jun.png",
+      "images/jul.png",
+      "images/aug.png",
+      "images/sep.png",
+      "images/oct.png",
+      "images/nov.png",
+      "images/dec.png",
+    ];
+    const smallDigitsFont = [
+      "images/date0.png",
+      "images/date1.png",
+      "images/date2.png",
+      "images/date3.png",
+      "images/date4.png",
+      "images/date5.png",
+      "images/date6.png",
+      "images/date7.png",
+      "images/date8.png",
+      "images/date9.png",
+    ];
+    const weekDaysFont = [
+      "images/mon.png",
+      "images/tue.png",
+      "images/wed.png",
+      "images/thu.png",
+      "images/fri.png",
+      "images/sat.png",
+      "images/sun.png",
+    ];
+    const statusDot = "images/dot.png";
+    let widgetGallery = [];
+    let currW = 0;
 
     __$$module$$__.module = DeviceRuntimeCore.Page({
       init_view() {
@@ -74,7 +80,7 @@ try {
           show_level: hmUI.show_level.ONLY_NORMAL,
         });
 
-       
+
         const timeDigits = [];
         let y = TIME_Y;
         for (let i = 0; i < 3; i++) {
@@ -149,29 +155,6 @@ try {
           show_level: hmUI.show_level.ONLY_AOD,
         });
 
-        hmUI.createWidget(hmUI.widget.IMG_DATE, {
-          month_startX: 43,
-          month_startY: 378,
-          month_en_array: monthsFont,
-          month_is_character: true,
-
-          day_startX: 114,
-          day_startY: 379,
-          day_align: hmUI.align.CENTER_H,
-          day_space: 0,
-          day_zero: false,
-          day_en_array: smallDigitsFont,
-
-          show_level: hmUI.show_level.ONLY_NORMAL,
-        });
-
-        hmUI.createWidget(hmUI.widget.IMG_WEEK, {
-          x: 64,
-          y: 416,
-          week_en: weekDaysFont,
-          show_level: hmUI.show_level.ONLY_NORMAL,
-        });
-
         hmUI.createWidget(hmUI.widget.IMG_STATUS, {
           x: 93,
           y: 465,
@@ -180,15 +163,124 @@ try {
           show_level: hmUI.show_level.ONLY_NORMAL,
         });
 
+        const dateGroup = hmUI.createWidget(hmUI.widget.GROUP, {
+          x: 43,
+          y: 380,
+          w: 110,
+          h: 76,
+        })
+
+        dateGroup.createWidget(hmUI.widget.IMG_DATE, {
+          month_startX: 0,
+          month_startY: 0,
+          month_en_array: monthsFont,
+          month_is_character: true,
+
+          day_startX: 71,
+          day_startY: 0,
+          day_align: hmUI.align.CENTER_H,
+          day_space: 0,
+          day_zero: false,
+          day_en_array: smallDigitsFont,
+
+          show_level: hmUI.show_level.ONLY_NORMAL,
+        });
+
+        dateGroup.createWidget(hmUI.widget.IMG_WEEK, {
+          x: 23,
+          y: 40,
+          week_en: weekDaysFont,
+          show_level: hmUI.show_level.ONLY_NORMAL,
+        });
+
+        widgetGallery.push(dateGroup);
+
+
+
+        const batteryGroup = hmUI.createWidget(hmUI.widget.GROUP, {
+          x: 43,
+          y: 380,
+          w: 110,
+          h: 76,
+        })
+
+        // const hundreds = batteryGroup.createWidget(hmUI.widget.IMG_LEVEL, {
+        //   x: 20,
+        //   y: 24,
+        //   image_array: smallDigitsFont,
+        //   image_length: smallDigitsFont.length,
+        //   level: 1,
+        //   show_level: hmUI.show_level.ONLY_NORMAL
+
+        // })
+        const tens = batteryGroup.createWidget(hmUI.widget.IMG, {
+          x: 24,
+          y: 24,
+          image_array: smallDigitsFont,
+          show_level: hmUI.show_level.ONLY_NORMAL
+
+        })
+        const ones = batteryGroup.createWidget(hmUI.widget.IMG, {
+          x: 47,
+          y: 24,
+          image_array: smallDigitsFont,
+          show_level: hmUI.show_level.ONLY_NORMAL
+
+        })
+        const percent = batteryGroup.createWidget(hmUI.widget.IMG, {
+          x: 70,
+          y: 24,
+          src: 'images/percent.png',
+          show_level: hmUI.show_level.ONLY_NORMAL
+        })
+
+
+        function setBattery() {
+          tens.setProperty(hmUI.prop.SRC, smallDigitsFont[Math.floor((batterySensor.current % 100) / 10)])
+          ones.setProperty(hmUI.prop.SRC, smallDigitsFont[batterySensor.current % 10])
+        }
+
+        function setCurrWidget(curr) {
+          widgetGallery[currW].setProperty(hmUI.prop.VISIBLE, false)
+          if (curr) {
+            currW = curr;
+          } else {
+            currW = (currW + 1) % widgetGallery.length;
+          }
+          widgetGallery[currW].setProperty(hmUI.prop.VISIBLE, true)
+        }
+
+        widgetGallery.push(batteryGroup);
+        widgetGallery.forEach((e) => e.setProperty(hmUI.prop.VISIBLE, false));
+        widgetGallery[0].setProperty(hmUI.prop.VISIBLE, true);
+
+        batterySensor.addEventListener(hmSensor.event.CHANGE, setBattery)
+        setBattery();
+
+        const button = hmUI.createWidget(hmUI.widget.BUTTON, {
+          press_src: "transparent.png",
+          normal_src: "transparent.png",
+          show_level: hmUI.show_level.ONLY_NORMAL,
+          x: 43,
+          y: 380,
+          w: 110,
+          h: 76,
+          click_func: function (b) {
+            setCurrWidget();
+          },
+        })
+
         updateTime();
-        
+
         hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
           resume_call: function () {
             updateTime();
+            setBattery();
           },
         });
-
+        
         timer.createTimer(0, 1000, () => updateTime());
+        timer.createTimer(0, 10000, () => setCurrWidget(0));
       },
       onInit() {
         console.log("index page.js on init invoke");
